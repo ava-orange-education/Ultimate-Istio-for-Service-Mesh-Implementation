@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: checkout-routing
+spec:
+  hosts:
+    - checkout
+  http:
+    # Route beta users to new version (v2)
+    - match:
+        - headers:
+            x-user-role:
+              exact: beta
+      route:
+        - destination:
+            host: checkout
+            subset: v2
+
+    # Default route for all other users (v1)
+    - route:
+        - destination:
+            host: checkout
+            subset: v1
