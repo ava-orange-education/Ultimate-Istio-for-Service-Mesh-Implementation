@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: productpage-routing
+spec:
+  hosts:
+    - productpage
+  http:
+    - match:
+        # Match based on URI
+        - uri:
+            exact: /productpage
+          # Match based on HTTP method
+          method:
+            exact: GET
+          # Match based on request headers
+          headers:
+            user-agent:
+              regex: ".*Chrome.*"
+      route:
+        - destination:
+            host: productpage
+            subset: v1
