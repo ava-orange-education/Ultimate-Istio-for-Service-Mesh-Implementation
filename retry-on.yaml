@@ -1,0 +1,4 @@
+retries:
+  attempts: 3
+  perTryTimeout: 1s
+  retryOn: "5xx,connect-failure,refused-stream"
